@@ -1,4 +1,4 @@
 my-radio
 ========
 
-My Raspberry
+My raspberry pi online radio.

@@ -32,8 +32,7 @@ public class App {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String s;
-		while ((s = in.readLine()) != null && s.length() != 0) {
-			System.out.println(s);
+		while ((s = in.readLine()) != null) {
 			if (s.equals("next")) {
 				radio.playNext();
 			}

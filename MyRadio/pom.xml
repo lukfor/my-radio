@@ -27,12 +27,18 @@
 		<artifactId>pi4j-core</artifactId>
 		<version>0.0.5</version>
 	</dependency>    
-    
+
     <dependency>
   <groupId>com.pi4j</groupId>
   <artifactId>pi4j-example</artifactId>
   <version>0.0.5</version>
 </dependency>
+
+		<dependency>
+			<groupId>com.esotericsoftware.yamlbeans</groupId>
+			<artifactId>yamlbeans</artifactId>
+			<version>1.06</version>
+		</dependency>
     
   </dependencies>
 </project>

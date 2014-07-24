@@ -26,7 +26,10 @@ public class App {
 			}
 		});
 
-		radio.on();
+		if (!radio.on()){
+			System.out.println("Radio on failed.");
+			return;
+		}
 
 		System.out.println("Radio on.");
 

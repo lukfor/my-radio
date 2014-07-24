@@ -1,8 +1,14 @@
 package lukfor.radio;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
+
+import com.esotericsoftware.yamlbeans.YamlException;
+import com.esotericsoftware.yamlbeans.YamlReader;
 
 import lukfor.radio.mplayer.IMPlayerListener;
 import lukfor.radio.mplayer.MPlayer;
@@ -13,15 +19,19 @@ public class Radio {
 
 	private RadioStation currentStation = null;
 
+	private RadioConfig config;
+
 	private List<RadioStation> stations;
 
 	private List<IRadioListener> listeners = new Vector<IRadioListener>();
 
-	//private Clip clip;
+	// private Clip clip;
 
-	public void on() {
+	public boolean on() {
 
-		loadStations();
+		if (!loadStations()) {
+			return false;
+		}
 
 		player = new MPlayer("/usr/bin/mplayer");
 		player.addListener(new IMPlayerListener() {
@@ -49,6 +59,8 @@ public class Radio {
 
 		playNext();
 
+		return true;
+
 	}
 
 	public void off() {
@@ -61,35 +73,19 @@ public class Radio {
 		}
 	}
 
-	protected void loadStations() {
+	protected boolean loadStations() {
 
-		stations = new Vector<RadioStation>();
-
-		RadioStation oe3 = new RadioStation();
-		oe3.setTitle("Hitradio Ö3");
-		oe3.setUrl("http://mp3stream7.apasf.apa.at:8000");
-		stations.add(oe3);
-
-		RadioStation rockAntenne = new RadioStation();
-		rockAntenne.setTitle("Rock Antenne");
-		rockAntenne
-				.setUrl("http://www.rockantenne.de/webradio/rockantenne-aac.pls");
-		stations.add(rockAntenne);
-
-		RadioStation bozen = new RadioStation();
-		bozen.setTitle("RAI Sender Bozen");
-		bozen.setUrl("http://radiobzlive.rai.it/RAIBZ_Livestream");
-		stations.add(bozen);
-
-		RadioStation s1 = new RadioStation();
-		s1.setTitle("Südtirol 1");
-		s1.setUrl("http://str2.creacast.com:80/sudtirol1a");
-		stations.add(s1);
-
-		RadioStation fm4 = new RadioStation();
-		fm4.setTitle("FM4");
-		fm4.setUrl("http://mp3stream1.apasf.apa.at:8000");
-		stations.add(fm4);
+		try {
+			YamlReader reader = new YamlReader(new FileReader("stations.txt"));
+			reader.getConfig().setPropertyElementType(RadioConfig.class,
+					"stations", RadioStation.class);
+			config = reader.read(RadioConfig.class);
+			stations = config.getStations();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 
 	}
 

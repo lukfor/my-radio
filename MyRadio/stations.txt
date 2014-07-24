@@ -1,0 +1,25 @@
+stations:
+
+  - title: Hitradio Ö3
+    url: http://mp3stream7.apasf.apa.at:8000
+    
+  - title: Rock Antenne
+    url: http://www.rockantenne.de/webradio/rockantenne-aac.pls
+
+  - title: RAI Sender Bozen
+    url: http://radiobzlive.rai.it/RAIBZ_Livestream
+
+  - title: Südtirol 1
+    url: http://str2.creacast.com:80/sudtirol1a
+
+  - title: FM4
+    url: http://mp3stream1.apasf.apa.at:8000
+
+  - title: Classic Jazz
+    url: http://pub2.jazzradio.com:80/jr_classicjazz
+
+  - title: Beatles
+    url: http://www.beatlesradio.com:9999/listen.pls
+
+  - title: Johnny Cash
+    url: http://www.live365.com/play/johnnycashradio

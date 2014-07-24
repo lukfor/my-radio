@@ -23,3 +23,6 @@ stations:
 
   - title: Johnny Cash
     url: http://www.live365.com/play/johnnycashradio
+
+  - title: Arabella
+    url: http://stream.arabella.vss.kapper.net:8000

@@ -1,4 +1,4 @@
-package lukfor.jmplayer;
+package lukfor.radio;
 
 /*
  * #%L
@@ -116,6 +116,7 @@ public class LcdExample {
 		lcd.write(LCD_ROW_2, "<L>", LCDTextAlignment.ALIGN_LEFT);
 		lcd.write(LCD_ROW_2, "<R>", LCDTextAlignment.ALIGN_RIGHT);
 		lcd.write(LCD_ROW_2, "CC", LCDTextAlignment.ALIGN_CENTER);
+
 		Thread.sleep(3000);
 
 		// stop all GPIO activity/threads by shutting down the GPIO controller

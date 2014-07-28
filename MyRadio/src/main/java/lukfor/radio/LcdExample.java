@@ -52,10 +52,10 @@ public class LcdExample {
 																// supported by
 																// LCD
 				LCD_COLUMNS, // number of columns supported by LCD
-				RaspiPin.GPIO_11, // LCD RS pin
-				RaspiPin.GPIO_10, // LCD strobe pin
-				RaspiPin.GPIO_00, // LCD data bit 1
-				RaspiPin.GPIO_01, // LCD data bit 2
+				RaspiPin.GPIO_06, // LCD RS pin
+				RaspiPin.GPIO_05, // LCD strobe pin
+				RaspiPin.GPIO_04, // LCD data bit 1
+				RaspiPin.GPIO_00, // LCD data bit 2
 				RaspiPin.GPIO_02, // LCD data bit 3
 				RaspiPin.GPIO_03); // LCD data bit 4
 

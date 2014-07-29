@@ -8,39 +8,36 @@ import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.RaspiPin;
 
-
-
 /**
  * Hello world!
  * 
  */
 public class App {
-	
+
 	public final static int LCD_ROWS = 2;
 	public final static int LCD_ROW_1 = 0;
 	public final static int LCD_ROW_2 = 1;
 	public final static int LCD_COLUMNS = 16;
 	public final static int LCD_BITS = 4;
-	
+
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 
-		final GpioLcdDisplay lcd = new GpioLcdDisplay(LCD_ROWS, // number of row
-				// supported by
-				// LCD
-LCD_COLUMNS, // number of columns supported by LCD
-RaspiPin.GPIO_06, // LCD RS pin
-RaspiPin.GPIO_05, // LCD strobe pin
-RaspiPin.GPIO_04, // LCD data bit 1
-RaspiPin.GPIO_00, // LCD data bit 2
-RaspiPin.GPIO_02, // LCD data bit 3
-RaspiPin.GPIO_03); // LCD data bit 4
-		
+		final RadioLcd lcd = new RadioLcd(RaspiPin.GPIO_06, // LCD RS pin
+				RaspiPin.GPIO_05, // LCD strobe pin
+				RaspiPin.GPIO_04, // LCD data bit 1
+				RaspiPin.GPIO_00, // LCD data bit 2
+				RaspiPin.GPIO_02, // LCD data bit 3
+				RaspiPin.GPIO_03); // LCD data bit 4
+
+		Thread lcdThread = new Thread(lcd);
+		lcdThread.start();
+
 		System.out.println("Hello.");
 
 		lcd.clear();
-		lcd.writeln(LCD_ROW_1, "<< Radio on >>", LCDTextAlignment.ALIGN_CENTER);
-		
+		lcd.writeLineA("<< Radio on >>", false);
+
 		final Radio radio = new Radio();
 		radio.addListener(new IRadioListener() {
 
@@ -50,15 +47,15 @@ RaspiPin.GPIO_03); // LCD data bit 4
 						+ radio.getRadioStation().getTitle());
 				System.out.println("Title: "
 						+ radio.getRadioStation().getTrackTitle());
-				
-				//lcd.clear();
-				lcd.writeln(LCD_ROW_1, radio.getRadioStation().getTitle());
-				lcd.writeln(LCD_ROW_2, radio.getRadioStation().getTrackTitle());
+
+				// lcd.clear();
+				lcd.writeLineA(radio.getRadioStation().getTitle(), false);
+				lcd.writeLineB(radio.getRadioStation().getTrackTitle() + " *** ", true);
 
 			}
 		});
 
-		if (!radio.on()){
+		if (!radio.on()) {
 			System.out.println("Radio on failed.");
 			return;
 		}
@@ -82,8 +79,11 @@ RaspiPin.GPIO_03); // LCD data bit 4
 		radio.off();
 		System.out.println("Radio off.");
 		lcd.clear();
-		lcd.writeln(LCD_ROW_1, "<< Radio odd >>", LCDTextAlignment.ALIGN_CENTER);
-	
+		lcd.writeLineA("<< Radio odd >>", false);
+		lcd.writeLineB("", false);
+
+		lcdThread.interrupt();
+		
 		System.out.println("Bye Bye.");
 
 	}

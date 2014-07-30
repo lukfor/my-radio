@@ -57,7 +57,7 @@ public class Radio {
 
 		player.init();
 
-		playNext();
+		//playNext();
 
 		return true;
 

@@ -3,9 +3,10 @@ package lukfor.radio;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
-import com.pi4j.component.lcd.LCDTextAlignment;
-import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.RaspiPin;
 
 /**
@@ -38,6 +39,19 @@ public class App {
 		lcd.clear();
 		lcd.writeLineA("<< Radio on >>", false);
 
+		Enumeration e = NetworkInterface.getNetworkInterfaces();
+		while (e.hasMoreElements()) {
+			NetworkInterface n = (NetworkInterface) e.nextElement();
+			Enumeration ee = n.getInetAddresses();
+			while (ee.hasMoreElements()) {
+				InetAddress i = (InetAddress) ee.nextElement();
+
+				if (i.getHostAddress().startsWith("192")) {
+					lcd.writeLineB(i.getHostAddress().toString(), false);
+
+				}
+			}
+		}
 		final Radio radio = new Radio();
 		radio.addListener(new IRadioListener() {
 
@@ -50,7 +64,8 @@ public class App {
 
 				// lcd.clear();
 				lcd.writeLineA(radio.getRadioStation().getTitle(), false);
-				lcd.writeLineB(radio.getRadioStation().getTrackTitle() + " *** ", true);
+				lcd.writeLineB(radio.getRadioStation().getTrackTitle()
+						+ " *** ", true);
 
 			}
 		});
@@ -83,7 +98,7 @@ public class App {
 		lcd.writeLineB("", false);
 
 		lcdThread.interrupt();
-		
+
 		System.out.println("Bye Bye.");
 
 	}

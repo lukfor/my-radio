@@ -24,5 +24,5 @@ stations:
   - title: Johnny Cash
     url: http://www.live365.com/play/johnnycashradio
 
-  - title: Arabella
-    url: http://stream.arabella.vss.kapper.net:8000
+  - title: Austro Pop
+    url: http://stream03.arabella.vss.kapper.net:8000/listen.pls

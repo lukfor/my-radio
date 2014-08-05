@@ -1,5 +1,8 @@
 package lukfor.radio;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
@@ -25,6 +28,8 @@ public class RadioLcd implements Runnable {
 	private boolean scrollA = false;
 
 	private boolean scrollB = false;
+
+	private static final Log log = LogFactory.getLog(RadioLcd.class);
 
 	public RadioLcd(Pin rs, Pin e, Pin d1, Pin d2, Pin d3, Pin d4) {
 		if (!DEBUG) {
@@ -68,7 +73,7 @@ public class RadioLcd implements Runnable {
 
 			}
 		} catch (InterruptedException e) {
-			System.out.println("Lcd Display shutdown.");
+			log.error("Lcd Display shutdown.", e);
 		}
 	}
 
@@ -81,7 +86,7 @@ public class RadioLcd implements Runnable {
 		if (!DEBUG) {
 			lcd.writeln(LCD_ROW_1, output);
 		} else {
-			System.out.println(output);
+			log.debug(output);
 		}
 
 	}
@@ -94,7 +99,7 @@ public class RadioLcd implements Runnable {
 		if (!DEBUG) {
 			lcd.writeln(LCD_ROW_2, output);
 		} else {
-			System.out.println(output);
+			log.debug(output);
 		}
 
 	}

@@ -7,6 +7,9 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.pi4j.io.gpio.RaspiPin;
 
 /**
@@ -21,6 +24,9 @@ public class App {
 	public final static int LCD_COLUMNS = 16;
 	public final static int LCD_BITS = 4;
 
+	private static final Log log = LogFactory.getLog(App.class);
+
+	
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 
@@ -34,7 +40,9 @@ public class App {
 		Thread lcdThread = new Thread(lcd);
 		lcdThread.start();
 
-		System.out.println("Hello.");
+		
+		
+		log.info("Hello.");
 
 		lcd.clear();
 		lcd.writeLineA("<< Radio on >>", false);
@@ -57,9 +65,9 @@ public class App {
 
 			@Override
 			public void onUpdate(RadioStation station) {
-				System.out.println("Radio: "
+				log.info("Radio: "
 						+ radio.getRadioStation().getTitle());
-				System.out.println("Title: "
+				log.info("Title: "
 						+ radio.getRadioStation().getTrackTitle());
 
 				// lcd.clear();
@@ -71,11 +79,11 @@ public class App {
 		});
 
 		if (!radio.on()) {
-			System.out.println("Radio on failed.");
+			log.error("Radio on failed.");
 			return;
 		}
 
-		System.out.println("Radio on.");
+		log.info("Radio on.");
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String s;
@@ -92,14 +100,14 @@ public class App {
 		}
 
 		radio.off();
-		System.out.println("Radio off.");
+		log.info("Radio off.");
 		lcd.clear();
 		lcd.writeLineA("<< Radio odd >>", false);
 		lcd.writeLineB("", false);
 
 		lcdThread.interrupt();
 
-		System.out.println("Bye Bye.");
+		log.info("Bye Bye.");
 
 	}
 }
